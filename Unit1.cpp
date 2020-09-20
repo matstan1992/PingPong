@@ -8,6 +8,9 @@
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 TForm1 *Form1;
+
+int xBall = 8, yBall = 8;
+
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
         : TForm(Owner)
@@ -53,3 +56,12 @@ void __fastcall TForm1::FormKeyUp(TObject *Sender, WORD &Key,
     if(Key == VK_DOWN) Rdown->Enabled = false;
 }
 //---------------------------------------------------------------------------
+void __fastcall TForm1::ballTimerTimer(TObject *Sender)
+{
+    ball->Left += xBall;
+    ball->Top += yBall;
+
+    //odbij od górnej 
+}
+//---------------------------------------------------------------------------
+

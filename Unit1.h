@@ -20,6 +20,8 @@ __published:	// IDE-managed Components
         TTimer *Ldown;
         TTimer *Rdown;
         TTimer *Rtop;
+        TImage *ball;
+        TTimer *ballTimer;
         void __fastcall LtopTimer(TObject *Sender);
         void __fastcall FormKeyDown(TObject *Sender, WORD &Key,
           TShiftState Shift);
@@ -28,6 +30,7 @@ __published:	// IDE-managed Components
         void __fastcall LdownTimer(TObject *Sender);
         void __fastcall RdownTimer(TObject *Sender);
         void __fastcall RtopTimer(TObject *Sender);
+        void __fastcall ballTimerTimer(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
         __fastcall TForm1(TComponent* Owner);
