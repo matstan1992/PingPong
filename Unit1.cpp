@@ -2,6 +2,7 @@
 
 #include <vcl.h>
 #pragma hdrstop
+#include "mmsystem.h"
 
 #include "Unit1.h"
 //---------------------------------------------------------------------------
@@ -9,7 +10,19 @@
 #pragma resource "*.dfm"
 TForm1 *Form1;
 
-int xBall = 8, yBall = 8;
+int xBall = -8, yBall = 8;
+
+bool collision (TImage * ball, TImage * brick)
+{
+    if(ball->Left >= brick->Left - ball->Width &&
+       ball->Left <= brick->Left + brick->Width &&
+       ball->Top + ball->Height >= brick->Top - ball->Height &&
+       ball->Top + ball->Height <= brick->Top + brick->Height)
+       {
+           return true;
+       }
+    else return false;
+}
 
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
@@ -67,19 +80,277 @@ void __fastcall TForm1::ballTimerTimer(TObject *Sender)
     //odbij od dolnej œciany
     if(ball->Top + ball->Height + 5 >= back->Height - 10) yBall = -yBall;
 
-    //punkt
+    //punkt dla prawego gracza
 
     if(ball->Left <= L->Left + L->Width - 35)
     {
         ballTimer->Enabled = false;
+        sndPlaySound("snd/point.wav", SND_ASYNC);
         Application->MessageBoxA("Punkt dla prawego gracza", "Punkt", MB_OK);
     }
 
-    if(ball->Left + ball->Width >= R->Left + R->Width + 15)
+    //odbicie lewego gracza
+    else if(ball->Top > L->Top - ball->Height/2 &&
+            ball->Top + ball->Height < L->Top + L->Height &&
+            ball->Left < L->Left + L->Width)
+        {
+            if(xBall < 0)
+            {
+                sndPlaySound("snd/hit.wav", SND_ASYNC);
+                xBall = -xBall;
+            }
+        }
+
+    //punkt dla lewego gracza
+    if(ball->Left + ball->Width >= R->Left + R->Width + 25)
     {
         ballTimer->Enabled = false;
+        sndPlaySound("snd/point.wav", SND_ASYNC);
         Application->MessageBoxA("Punkt dla lewego gracza", "Punkt", MB_OK);
     }
+    //odbicie prawego gracza
+    else if(ball->Top > R->Top - ball->Height/2 &&
+            ball->Top + ball->Height < R->Top + R->Height &&
+            ball->Left + ball->Width > R->Left)
+        {
+            if(xBall > 0)
+            {
+                sndPlaySound("snd/hit.wav", SND_ASYNC);
+                xBall = -xBall;
+            }
+        }
+
+    //Image1
+    if(collision(ball, Image1) && Image1->Visible == true)
+    {
+        sndPlaySound("snd/brick.wav", SND_ASYNC);
+        xBall = -xBall;
+        yBall = -yBall;
+        Image1Down->Enabled = false;
+        Image1Top->Enabled = false;
+        Image1->Visible = false;
+        Image2->Visible = true;
+        Image2Down->Enabled = true;
+        Image2Top->Enabled = true;
+    }
+
+    //Image2
+    if(collision(ball, Image2) && Image2->Visible == true)
+    {
+        sndPlaySound("snd/brick.wav", SND_ASYNC);
+        xBall = -xBall;
+        yBall = -yBall;
+        Image2Down->Enabled = false;
+        Image2Top->Enabled = false;
+        Image2->Visible = false;
+        Image3->Visible = true;
+        Image3Down->Enabled = true;
+        Image3Top->Enabled = true;
+    }
+
+    //Image3
+    if(collision(ball, Image3) && Image3->Visible == true)
+    {
+        sndPlaySound("snd/brick.wav", SND_ASYNC);
+        xBall = -xBall;
+        yBall = -yBall;
+        Image3Down->Enabled = false;
+        Image3Top->Enabled = false;
+        Image3->Visible = false;
+    }
+
+    //Image4
+    if(collision(ball, Image4) && Image4->Visible == true)
+    {
+        sndPlaySound("snd/brick.wav", SND_ASYNC);
+        xBall = -xBall;
+        yBall = -yBall;
+        Image4Down->Enabled = false;
+        Image4Top->Enabled = false;
+        Image4->Visible = false;
+        Image5->Visible = true;
+        Image5Down->Enabled = true;
+        Image5Top->Enabled = true;
+    }
+
+    //Image5
+    if(collision(ball, Image5) && Image5->Visible == true)
+    {
+        sndPlaySound("snd/brick.wav", SND_ASYNC);
+        xBall = -xBall;
+        yBall = -yBall;
+        Image5Down->Enabled = false;
+        Image5Top->Enabled = false;
+        Image5->Visible = false;
+        Image6->Visible = true;
+        Image6Down->Enabled = true;
+        Image6Top->Enabled = true;
+    }
+
+    //Image6
+    if(collision(ball, Image6) && Image6->Visible == true)
+    {
+        sndPlaySound("snd/brick.wav", SND_ASYNC);
+        xBall = -xBall;
+        yBall = -yBall;
+        Image6Down->Enabled = false;
+        Image6Top->Enabled = false;
+        Image6->Visible = false;
+    }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Image1TopTimer(TObject *Sender)
+{
+    if(Image1->Top > 15)
+    {
+        Image1Down->Enabled = false;
+        Image1->Top -= 10;
+    }
+    else Image1Down->Enabled = true;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Image1DownTimer(TObject *Sender)
+{
+    if(Image1->Top + Image1->Height < back->Height - 15)
+    {
+        Image1Top->Enabled = false;
+        Image1->Top += 10;
+    }
+    else Image1Top->Enabled = true;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Image2TopTimer(TObject *Sender)
+{
+    if(Image2->Top > 15)
+    {
+        Image2Down->Enabled = false;
+        Image2->Top -= 10;
+    }
+    else Image2Down->Enabled = true;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Image2DownTimer(TObject *Sender)
+{
+    if(Image2->Top + Image2->Height < back->Height - 15)
+    {
+        Image2Top->Enabled = false;
+        Image2->Top += 10;
+    }
+    else Image2Top->Enabled = true;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Image3TopTimer(TObject *Sender)
+{
+   if(Image3->Top > 15)
+    {
+        Image3Down->Enabled = false;
+        Image3->Top -= 10;
+    }
+    else Image3Down->Enabled = true;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Image3DownTimer(TObject *Sender)
+{
+   if(Image3->Top + Image3->Height < back->Height - 15)
+    {
+        Image3Top->Enabled = false;
+        Image3->Top += 10;
+    }
+    else Image3Top->Enabled = true;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Image4TopTimer(TObject *Sender)
+{
+    if(Image4->Top > 15)
+    {
+        Image4Down->Enabled = false;
+        Image4->Top -= 10;
+    }
+    else Image4Down->Enabled = true;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Image4DownTimer(TObject *Sender)
+{
+    if(Image4->Top + Image4->Height < back->Height - 15)
+    {
+        Image4Top->Enabled = false;
+        Image4->Top += 10;
+    }
+    else Image4Top->Enabled = true;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Image5TopTimer(TObject *Sender)
+{
+    if(Image5->Top > 15)
+    {
+        Image5Down->Enabled = false;
+        Image5->Top -= 10;
+    }
+    else Image5Down->Enabled = true;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Image5DownTimer(TObject *Sender)
+{
+    if(Image5->Top + Image5->Height < back->Height - 15)
+    {
+        Image5Top->Enabled = false;
+        Image5->Top += 10;
+    }
+    else Image5Top->Enabled = true;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Image6TopTimer(TObject *Sender)
+{
+    if(Image6->Top > 15)
+    {
+        Image6Down->Enabled = false;
+        Image6->Top -= 10;
+    }
+    else Image6Down->Enabled = true;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Image6DownTimer(TObject *Sender)
+{
+    if(Image6->Top + Image6->Height < back->Height - 15)
+    {
+        Image6Top->Enabled = false;
+        Image6->Top += 10;
+    }
+    else Image6Top->Enabled = true;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button1Click(TObject *Sender)
+{
+    ball->Visible = true;
+    ballTimer->Enabled = true;
+    Image1->Visible = false;
+    Image4->Visible = false;
+    Button1->Visible = false;
+    Button2->Visible = false;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button2Click(TObject *Sender)
+{
+    ball->Visible = true;
+    ballTimer->Enabled = true;
+    Image1->Visible = true;
+    Image4->Visible = true;
+    Button1->Visible = false;
+    Button2->Visible = false;
 }
 //---------------------------------------------------------------------------
 
