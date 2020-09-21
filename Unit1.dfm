@@ -3,7 +3,6 @@ object Form1: TForm1
   Top = 125
   Width = 1016
   Height = 688
-  Align = alTop
   Caption = 'PingPong v1.0'
   Color = clBtnFace
   UseDockManager = True
@@ -56815,7 +56814,7 @@ object Form1: TForm1
     Top = 24
   end
   object ballTimer: TTimer
-    Interval = 25
+    Interval = 50
     OnTimer = ballTimerTimer
     Left = 488
     Top = 16

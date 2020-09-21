@@ -61,7 +61,25 @@ void __fastcall TForm1::ballTimerTimer(TObject *Sender)
     ball->Left += xBall;
     ball->Top += yBall;
 
-    //odbij od górnej 
+    //odbij od górnej œciany
+    if(ball->Top + 5 <= back->Top + 20) yBall = -yBall;
+
+    //odbij od dolnej œciany
+    if(ball->Top + ball->Height + 5 >= back->Height - 10) yBall = -yBall;
+
+    //punkt
+
+    if(ball->Left <= L->Left + L->Width - 35)
+    {
+        ballTimer->Enabled = false;
+        Application->MessageBoxA("Punkt dla prawego gracza", "Punkt", MB_OK);
+    }
+
+    if(ball->Left + ball->Width >= R->Left + R->Width + 15)
+    {
+        ballTimer->Enabled = false;
+        Application->MessageBoxA("Punkt dla lewego gracza", "Punkt", MB_OK);
+    }
 }
 //---------------------------------------------------------------------------
 
