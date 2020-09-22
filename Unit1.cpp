@@ -27,6 +27,28 @@ bool collision (TImage * ball, TImage * brick)
 bool gameOnHard = false;
 bool gameOnNormal = false;
 
+void win(int Lscore, int Rscore)
+{
+    if(Lscore >= 12)
+    {
+        Form1->Label1->Caption = "GRATULACJE! Wygrywa lewy gracz!";
+        Form1->Label1->Visible = true;
+        sndPlaySound("snd/end.wav", SND_ASYNC);
+        Form1->Button3->Visible = true;
+        Form1->Button4->Visible = true;
+        Form1->Button5->Visible = false;
+    }
+    else if(Rscore >= 12)
+    {
+        Form1->Label1->Caption = "GRATULACJE! Wygrywa prawy gracz!";
+        Form1->Label1->Visible = true;
+        sndPlaySound("snd/end.wav", SND_ASYNC);
+        Form1->Button3->Visible = true;
+        Form1->Button4->Visible = true;
+        Form1->Button5->Visible = false;
+    }
+}
+
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
         : TForm(Owner)
@@ -95,6 +117,7 @@ void __fastcall TForm1::ballTimerTimer(TObject *Sender)
         Button5->Visible = true;
         Button3->Visible = true;
         Button4->Visible = true;
+        win(Lscore,Rscore);
        // Application->MessageBoxA("Punkt dla prawego gracza", "Punkt", MB_OK);
     }
 
@@ -122,6 +145,7 @@ void __fastcall TForm1::ballTimerTimer(TObject *Sender)
         Button5->Visible = true;
         Button3->Visible = true;
         Button4->Visible = true;
+        win(Lscore,Rscore);
         //Application->MessageBoxA("Punkt dla lewego gracza", "Punkt", MB_OK);
     }
 
@@ -422,6 +446,7 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
     L->Top = 251;
     R->Left = 972;
     R->Top = 251;
+    Label1->Visible = false;
     Lscore = 0;
     Rscore = 0;
     Label2->Caption = IntToStr(Lscore);

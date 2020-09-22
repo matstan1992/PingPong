@@ -59088,7 +59088,7 @@ object Form1: TForm1
   end
   object ballTimer: TTimer
     Enabled = False
-    Interval = 50
+    Interval = 30
     OnTimer = ballTimerTimer
     Left = 488
     Top = 496
