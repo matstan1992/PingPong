@@ -13,7 +13,7 @@ TForm1 *Form1;
 int xBall = -8, yBall = -8, Lscore = 0, Rscore = 0, numberOfBounces = 0,
     totalNumberOfBounces = 0;
 
-bool collision(TImage * ball, TImage * brick)
+bool isCollision(TImage * ball, TImage * brick)
 {
     if(ball->Left >= brick->Left - ball->Width &&
        ball->Left <= brick->Left + brick->Width &&
@@ -25,8 +25,8 @@ bool collision(TImage * ball, TImage * brick)
     else return false;
 }
 
-bool gameOnHard = false;
-bool gameOnNormal = false;
+bool isGameOnHard = false;
+bool isGameOnNormal = false;
 
 bool isBallOnMiddle(TImage * ball, TImage * paddle)
 {
@@ -78,6 +78,34 @@ void acceleration(int numberOfBounces, bool isBallOnMiddle)
     }
 }
 
+void newGame()
+{
+    Form1->Button1->Visible = true;
+    Form1->Button2->Visible = true;
+    Form1->Button3->Visible = false;
+    Form1->Button4->Visible = false;
+    Form1->Button5->Visible = false;
+    Form1->Image1->Visible = false;
+    Form1->Image2->Visible = false;
+    Form1->Image3->Visible = false;
+    Form1->Image4->Visible = false;
+    Form1->Image5->Visible = false;
+    Form1->Image6->Visible = false;
+    Form1->ballTimer->Interval = 40;
+    Form1->ball->Left = 484;
+    Form1->ball->Top = 284;
+    Form1->L->Left = 8;
+    Form1->L->Top = 251;
+    Form1->R->Left = 972;
+    Form1->R->Top = 251;
+    Form1->Label1->Visible = false;
+    Form1->Label3->Visible = false;
+    Lscore = 0;
+    Rscore = 0;
+    Form1->Label2->Caption = IntToStr(Lscore) + "-" + IntToStr(Rscore);
+    numberOfBounces = 0;
+    totalNumberOfBounces = 0;
+}
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
         : TForm(Owner)
@@ -149,7 +177,6 @@ void __fastcall TForm1::ballTimerTimer(TObject *Sender)
         Button3->Visible = true;
         Button4->Visible = true;
         win(Lscore,Rscore);
-       // Application->MessageBoxA("Punkt dla prawego gracza", "Punkt", MB_OK);
     }
 
     //odbicie lewego gracza
@@ -183,7 +210,6 @@ void __fastcall TForm1::ballTimerTimer(TObject *Sender)
         Button3->Visible = true;
         Button4->Visible = true;
         win(Lscore,Rscore);
-        //Application->MessageBoxA("Punkt dla lewego gracza", "Punkt", MB_OK);
     }
 
     //odbicie prawego gracza
@@ -203,7 +229,7 @@ void __fastcall TForm1::ballTimerTimer(TObject *Sender)
         }
 
     //Image1
-    if(collision(ball, Image1) && Image1->Visible == true)
+    if(isCollision(ball, Image1) && Image1->Visible == true)
     {
         sndPlaySound("snd/brick.wav", SND_ASYNC);
         xBall = -xBall;
@@ -217,7 +243,7 @@ void __fastcall TForm1::ballTimerTimer(TObject *Sender)
     }
 
     //Image2
-    if(collision(ball, Image2) && Image2->Visible == true)
+    if(isCollision(ball, Image2) && Image2->Visible == true)
     {
         sndPlaySound("snd/brick.wav", SND_ASYNC);
         xBall = -xBall;
@@ -231,7 +257,7 @@ void __fastcall TForm1::ballTimerTimer(TObject *Sender)
     }
 
     //Image3
-    if(collision(ball, Image3) && Image3->Visible == true)
+    if(isCollision(ball, Image3) && Image3->Visible == true)
     {
         sndPlaySound("snd/brick.wav", SND_ASYNC);
         xBall = -xBall;
@@ -242,7 +268,7 @@ void __fastcall TForm1::ballTimerTimer(TObject *Sender)
     }
 
     //Image4
-    if(collision(ball, Image4) && Image4->Visible == true)
+    if(isCollision(ball, Image4) && Image4->Visible == true)
     {
         sndPlaySound("snd/brick.wav", SND_ASYNC);
         xBall = -xBall;
@@ -256,7 +282,7 @@ void __fastcall TForm1::ballTimerTimer(TObject *Sender)
     }
 
     //Image5
-    if(collision(ball, Image5) && Image5->Visible == true)
+    if(isCollision(ball, Image5) && Image5->Visible == true)
     {
         sndPlaySound("snd/brick.wav", SND_ASYNC);
         xBall = -xBall;
@@ -270,7 +296,7 @@ void __fastcall TForm1::ballTimerTimer(TObject *Sender)
     }
 
     //Image6
-    if(collision(ball, Image6) && Image6->Visible == true)
+    if(isCollision(ball, Image6) && Image6->Visible == true)
     {
         sndPlaySound("snd/brick.wav", SND_ASYNC);
         xBall = -xBall;
@@ -416,8 +442,8 @@ void __fastcall TForm1::Image6DownTimer(TObject *Sender)
 
 void __fastcall TForm1::Button1Click(TObject *Sender)
 {
-    gameOnNormal = true;
-    gameOnHard = false;
+    isGameOnNormal = true;
+    isGameOnHard = false;
     Button1->Visible = false;
     Button2->Visible = false;
     Label1->Visible = true;
@@ -436,8 +462,8 @@ void __fastcall TForm1::Button1Click(TObject *Sender)
 
 void __fastcall TForm1::Button2Click(TObject *Sender)
 {
-    gameOnHard = true;
-    gameOnNormal = false;
+    isGameOnHard = true;
+    isGameOnNormal = false;
     Button1->Visible = false;
     Button2->Visible = false;
     Label1->Visible = true;
@@ -464,37 +490,23 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
 
 void __fastcall TForm1::Button4Click(TObject *Sender)
 {
-   Application->Terminate();        
+    if(Application->MessageBoxA("Czy na pewno zakoñczyæ program?", "PotwierdŸ",
+      MB_YESNO | MB_ICONQUESTION) == IDYES)
+      {
+          Application->Terminate();
+      }
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm1::Button3Click(TObject *Sender)
 {
-    Button1->Visible = true;
-    Button2->Visible = true;
-    Button3->Visible = false;
-    Button4->Visible = false;
-    Button5->Visible = false;
-    Image1->Visible = false;
-    Image2->Visible = false;
-    Image3->Visible = false;
-    Image4->Visible = false;
-    Image5->Visible = false;
-    Image6->Visible = false;
-    ballTimer->Interval = 40;
-    ball->Left = 484;
-    ball->Top = 284;
-    L->Left = 8;
-    L->Top = 251;
-    R->Left = 972;
-    R->Top = 251;
-    Label1->Visible = false;
-    Label3->Visible = false;
-    Lscore = 0;
-    Rscore = 0;
-    Label2->Caption = IntToStr(Lscore) + "-" + IntToStr(Rscore);
-    numberOfBounces = 0;
-    totalNumberOfBounces = 0;
+    if((isGameOnNormal == true || isGameOnHard == true) &&(Application->MessageBoxA(
+    "Czy na pewno chcesz zacz¹æ od nowa?", "PotwierdŸ",
+    MB_YESNO | MB_ICONQUESTION) == IDYES))
+      {
+          newGame();
+      }
+    else newGame();
 }
 //---------------------------------------------------------------------------
 
@@ -512,11 +524,11 @@ void __fastcall TForm1::Button5Click(TObject *Sender)
     R->Left = 972;
     R->Top = 251;
 
-    if(gameOnNormal == true)
+    if(isGameOnNormal == true)
     {
         Form1->Button1Click(Button1);
     }
-    else if(gameOnHard == true)
+    else if(isGameOnHard == true)
     {
         Image1->Visible = false;
         Image2->Visible = false;
@@ -528,6 +540,22 @@ void __fastcall TForm1::Button5Click(TObject *Sender)
     }
     numberOfBounces = 0;
     totalNumberOfBounces = 0;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::FormClose(TObject *Sender, TCloseAction &Action)
+{
+    if(Application->MessageBoxA("Czy na pewno zakoñczyæ program?", "PotwierdŸ",
+      MB_YESNO | MB_ICONQUESTION) == IDNO)
+      {
+          Action = caNone;
+      }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::FormCreate(TObject *Sender)
+{
+    Application->MessageBoxA("Witaj w grze PingPong v1.0\n\nLewy gracz steruje wciskaj¹c klawisze A/Z.\nPrawy gracz steruje wciskaj¹c strza³ki góra/dó³.\n\nDla urozmaicenia zabawy:\nKiedy odbijesz pi³ke na œrodku paletki, wówczas pi³ka przyspieszy oraz im d³u¿ej odbijasz, tym pi³ka szybciej przemieszcza sie.\nMo¿esz wybraæ jeden z dwóch poziomów trudnoœci.\n\nMi³ej zabawy!", "PingPong v1.0", MB_OK);
 }
 //---------------------------------------------------------------------------
 
