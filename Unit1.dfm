@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 192
   Top = 125
   Width = 1016
-  Height = 688
+  Height = 677
   Caption = 'PingPong v1.0'
   Color = clBtnFace
   UseDockManager = True
@@ -17,7 +17,7 @@ object Form1: TForm1
   OnKeyUp = FormKeyUp
   DesignSize = (
     1000
-    649)
+    638)
   PixelsPerInch = 96
   TextHeight = 13
   object back: TImage
@@ -56791,7 +56791,7 @@ object Form1: TForm1
   end
   object Image1: TImage
     Left = 336
-    Top = 24
+    Top = 16
     Width = 80
     Height = 80
     AutoSize = True
@@ -57853,7 +57853,7 @@ object Form1: TForm1
   end
   object Image4: TImage
     Left = 584
-    Top = 496
+    Top = 512
     Width = 80
     Height = 80
     AutoSize = True
@@ -58816,7 +58816,7 @@ object Form1: TForm1
   end
   object Image6: TImage
     Left = 608
-    Top = 176
+    Top = 200
     Width = 30
     Height = 30
     AutoSize = True
@@ -58913,11 +58913,72 @@ object Form1: TForm1
     Transparent = True
     Visible = False
   end
+  object Label1: TLabel
+    Left = 136
+    Top = 216
+    Width = 729
+    Height = 49
+    Alignment = taCenter
+    Anchors = [akBottom]
+    AutoSize = False
+    Caption = 'Punkt dla prawego gracza  >>>'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -31
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    Transparent = True
+    Visible = False
+  end
+  object Label2: TLabel
+    Left = 464
+    Top = 600
+    Width = 18
+    Height = 37
+    Caption = '0'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -32
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    Transparent = True
+  end
+  object Label3: TLabel
+    Left = 520
+    Top = 600
+    Width = 18
+    Height = 37
+    Caption = '0'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -32
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    Transparent = True
+  end
+  object Label4: TLabel
+    Left = 496
+    Top = 600
+    Width = 10
+    Height = 37
+    Caption = '-'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -32
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    Transparent = True
+  end
   object Button1: TButton
-    Left = 400
-    Top = 208
-    Width = 193
-    Height = 81
+    Left = 368
+    Top = 312
+    Width = 265
+    Height = 70
+    Cursor = crHandPoint
     Anchors = [akLeft, akTop, akBottom]
     Caption = 'Normalny'
     Font.Charset = DEFAULT_CHARSET
@@ -58927,13 +58988,15 @@ object Form1: TForm1
     Font.Style = []
     ParentFont = False
     TabOrder = 0
+    Visible = False
     OnClick = Button1Click
   end
   object Button2: TButton
-    Left = 400
-    Top = 312
-    Width = 193
-    Height = 81
+    Left = 368
+    Top = 416
+    Width = 265
+    Height = 70
+    Cursor = crHandPoint
     Anchors = [akLeft, akTop, akBottom]
     Caption = 'Trudny'
     Font.Charset = DEFAULT_CHARSET
@@ -58943,7 +59006,57 @@ object Form1: TForm1
     Font.Style = []
     ParentFont = False
     TabOrder = 1
+    Visible = False
     OnClick = Button2Click
+  end
+  object Button3: TButton
+    Left = 368
+    Top = 312
+    Width = 265
+    Height = 73
+    Cursor = crHandPoint
+    Caption = 'Nowa gra'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -31
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 2
+    OnClick = Button3Click
+  end
+  object Button4: TButton
+    Left = 368
+    Top = 416
+    Width = 265
+    Height = 73
+    Cursor = crHandPoint
+    Caption = 'Koniec gry'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -31
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 3
+    OnClick = Button4Click
+  end
+  object Button5: TButton
+    Left = 368
+    Top = 96
+    Width = 265
+    Height = 73
+    Cursor = crHandPoint
+    Caption = 'Nast'#281'pna runda'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -32
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 4
+    Visible = False
+    OnClick = Button5Click
   end
   object Ltop: TTimer
     Enabled = False
@@ -58978,86 +59091,86 @@ object Form1: TForm1
     Interval = 50
     OnTimer = ballTimerTimer
     Left = 488
-    Top = 16
+    Top = 496
   end
   object Image1Top: TTimer
     Interval = 50
     OnTimer = Image1TopTimer
     Left = 344
-    Top = 432
+    Top = 392
   end
   object Image1Down: TTimer
     Interval = 50
     OnTimer = Image1DownTimer
     Left = 376
-    Top = 432
+    Top = 392
   end
   object Image2Top: TTimer
     Enabled = False
     Interval = 35
     OnTimer = Image2TopTimer
     Left = 344
-    Top = 464
+    Top = 424
   end
   object Image2Down: TTimer
     Enabled = False
     Interval = 35
     OnTimer = Image2DownTimer
     Left = 376
-    Top = 464
+    Top = 424
   end
   object Image3Top: TTimer
     Enabled = False
     Interval = 20
     OnTimer = Image3TopTimer
     Left = 344
-    Top = 496
+    Top = 456
   end
   object Image3Down: TTimer
     Enabled = False
     Interval = 20
     OnTimer = Image3DownTimer
     Left = 376
-    Top = 496
+    Top = 456
   end
   object Image4Top: TTimer
     Interval = 50
     OnTimer = Image4TopTimer
     Left = 592
-    Top = 64
+    Top = 392
   end
   object Image4Down: TTimer
     Interval = 50
     OnTimer = Image4DownTimer
     Left = 624
-    Top = 64
+    Top = 392
   end
   object Image5Top: TTimer
     Enabled = False
     Interval = 35
     OnTimer = Image5TopTimer
     Left = 592
-    Top = 96
+    Top = 424
   end
   object Image5Down: TTimer
     Enabled = False
     Interval = 35
     OnTimer = Image5DownTimer
     Left = 624
-    Top = 96
+    Top = 424
   end
   object Image6Top: TTimer
     Enabled = False
     Interval = 20
     OnTimer = Image6TopTimer
     Left = 592
-    Top = 128
+    Top = 456
   end
   object Image6Down: TTimer
     Enabled = False
     Interval = 20
     OnTimer = Image6DownTimer
     Left = 624
-    Top = 128
+    Top = 456
   end
 end

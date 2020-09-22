@@ -10,7 +10,7 @@
 #pragma resource "*.dfm"
 TForm1 *Form1;
 
-int xBall = -8, yBall = 8;
+int xBall = -8, yBall = -8, Lscore = 0, Rscore = 0;
 
 bool collision (TImage * ball, TImage * brick)
 {
@@ -23,6 +23,9 @@ bool collision (TImage * ball, TImage * brick)
        }
     else return false;
 }
+
+bool gameOnHard = false;
+bool gameOnNormal = false;
 
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
@@ -81,12 +84,18 @@ void __fastcall TForm1::ballTimerTimer(TObject *Sender)
     if(ball->Top + ball->Height + 5 >= back->Height - 10) yBall = -yBall;
 
     //punkt dla prawego gracza
-
     if(ball->Left <= L->Left + L->Width - 35)
     {
         ballTimer->Enabled = false;
         sndPlaySound("snd/point.wav", SND_ASYNC);
-        Application->MessageBoxA("Punkt dla prawego gracza", "Punkt", MB_OK);
+        Label1->Caption = "Punkt dla prawego gracza  >>>";
+        Label1->Visible = true;
+        Rscore++;
+        Label3->Caption = IntToStr(Rscore);
+        Button5->Visible = true;
+        Button3->Visible = true;
+        Button4->Visible = true;
+       // Application->MessageBoxA("Punkt dla prawego gracza", "Punkt", MB_OK);
     }
 
     //odbicie lewego gracza
@@ -106,8 +115,16 @@ void __fastcall TForm1::ballTimerTimer(TObject *Sender)
     {
         ballTimer->Enabled = false;
         sndPlaySound("snd/point.wav", SND_ASYNC);
-        Application->MessageBoxA("Punkt dla lewego gracza", "Punkt", MB_OK);
+        Label1->Caption = "<<<  Punkt dla lewego gracza ";
+        Label1->Visible = true;
+        Lscore++;
+        Label2->Caption = IntToStr(Lscore);
+        Button5->Visible = true;
+        Button3->Visible = true;
+        Button4->Visible = true;
+        //Application->MessageBoxA("Punkt dla lewego gracza", "Punkt", MB_OK);
     }
+
     //odbicie prawego gracza
     else if(ball->Top > R->Top - ball->Height/2 &&
             ball->Top + ball->Height < R->Top + R->Height &&
@@ -334,23 +351,113 @@ void __fastcall TForm1::Image6DownTimer(TObject *Sender)
 
 void __fastcall TForm1::Button1Click(TObject *Sender)
 {
+    gameOnNormal = true;
+    gameOnHard = false;
+    Button1->Visible = false;
+    Button2->Visible = false;
+    Label1->Visible = true;
+    Label1->Caption = "Gra rozpocznie siê za: 2";
+    Application->ProcessMessages(); Sleep(1000);
+    Label1->Caption = "Gra rozpocznie siê za: 1";
+    Application->ProcessMessages(); Sleep(1000);
+    sndPlaySound("snd/start.wav", SND_ASYNC);
+    Label1->Visible = false;
     ball->Visible = true;
     ballTimer->Enabled = true;
     Image1->Visible = false;
     Image4->Visible = false;
-    Button1->Visible = false;
-    Button2->Visible = false;
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm1::Button2Click(TObject *Sender)
 {
-    ball->Visible = true;
-    ballTimer->Enabled = true;
-    Image1->Visible = true;
-    Image4->Visible = true;
+    gameOnHard = true;
+    gameOnNormal = false;
     Button1->Visible = false;
     Button2->Visible = false;
+    Label1->Visible = true;
+    Label1->Caption = "Gra rozpocznie siê za: 2";
+    Application->ProcessMessages(); Sleep(1000);
+    Label1->Caption = "Gra rozpocznie siê za: 1";
+    Application->ProcessMessages(); Sleep(1000);
+    sndPlaySound("snd/start.wav", SND_ASYNC);
+    Label1->Visible = false;
+    ball->Visible = true;
+    ballTimer->Enabled = true;
+    Image1Top->Enabled = true;
+    Image1Down->Enabled = true;
+    Image4Top->Enabled = true;
+    Image4Down->Enabled = true;
+    Image1->Visible = true;
+    Image4->Visible = true;
+    Image2->Visible = false;
+    Image3->Visible = false;
+    Image5->Visible = false;
+    Image6->Visible = false;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button4Click(TObject *Sender)
+{
+   Application->Terminate();        
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button3Click(TObject *Sender)
+{
+    Button1->Visible = true;
+    Button2->Visible = true;
+    Button3->Visible = false;
+    Button4->Visible = false;
+    Button5->Visible = false;
+    Image1->Visible = false;
+    Image2->Visible = false;
+    Image3->Visible = false;
+    Image4->Visible = false;
+    Image5->Visible = false;
+    Image6->Visible = false;
+    ball->Left = 484;
+    ball->Top = 284;
+    L->Left = 8;
+    L->Top = 251;
+    R->Left = 972;
+    R->Top = 251;
+    Lscore = 0;
+    Rscore = 0;
+    Label2->Caption = IntToStr(Lscore);
+    Label3->Caption = IntToStr(Rscore);
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button5Click(TObject *Sender)
+{
+    if(gameOnNormal == true)
+    {
+        Button5->Visible = false;
+        Button4->Visible = false;
+        Button3->Visible = false;
+        ball->Left = 484;
+        ball->Top = 284;
+        L->Left = 8;
+        L->Top = 251;
+        R->Left = 972;
+        R->Top = 251;
+        Form1->Button1Click(Button1);
+    }
+    else if(gameOnHard == true)
+    {
+        Button5->Visible = false;
+        Button4->Visible = false;
+        Button3->Visible = false;
+        ball->Left = 484;
+        ball->Top = 284;
+        L->Left = 8;
+        L->Top = 251;
+        R->Left = 972;
+        R->Top = 251;
+        Form1->Button2Click(Button2);
+    }
 }
 //---------------------------------------------------------------------------
 
