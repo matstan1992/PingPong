@@ -44,11 +44,10 @@ __published:	// IDE-managed Components
         TButton *Button2;
         TLabel *Label1;
         TLabel *Label2;
-        TLabel *Label3;
-        TLabel *Label4;
         TButton *Button3;
         TButton *Button4;
         TButton *Button5;
+        TLabel *Label3;
         void __fastcall LtopTimer(TObject *Sender);
         void __fastcall FormKeyDown(TObject *Sender, WORD &Key,
           TShiftState Shift);
