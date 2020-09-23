@@ -13,6 +13,8 @@ object Form1: TForm1
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  OnClose = FormClose
+  OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyUp = FormKeyUp
   DesignSize = (
@@ -58932,11 +58934,13 @@ object Form1: TForm1
     Visible = False
   end
   object Label2: TLabel
-    Left = 464
+    Left = 448
     Top = 600
-    Width = 18
+    Width = 105
     Height = 37
-    Caption = '0'
+    Alignment = taCenter
+    AutoSize = False
+    Caption = '0-0'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -32
@@ -58946,32 +58950,21 @@ object Form1: TForm1
     Transparent = True
   end
   object Label3: TLabel
-    Left = 520
-    Top = 600
-    Width = 18
-    Height = 37
-    Caption = '0'
+    Left = 168
+    Top = 528
+    Width = 665
+    Height = 49
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'Liczba odbi'#263': '
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -32
+    Font.Height = -31
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
     Transparent = True
-  end
-  object Label4: TLabel
-    Left = 496
-    Top = 600
-    Width = 10
-    Height = 37
-    Caption = '-'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -32
-    Font.Name = 'MS Sans Serif'
-    Font.Style = []
-    ParentFont = False
-    Transparent = True
+    Visible = False
   end
   object Button1: TButton
     Left = 368
@@ -59088,7 +59081,7 @@ object Form1: TForm1
   end
   object ballTimer: TTimer
     Enabled = False
-    Interval = 50
+    Interval = 40
     OnTimer = ballTimerTimer
     Left = 488
     Top = 496

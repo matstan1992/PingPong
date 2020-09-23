@@ -44,11 +44,10 @@ __published:	// IDE-managed Components
         TButton *Button2;
         TLabel *Label1;
         TLabel *Label2;
-        TLabel *Label3;
-        TLabel *Label4;
         TButton *Button3;
         TButton *Button4;
         TButton *Button5;
+        TLabel *Label3;
         void __fastcall LtopTimer(TObject *Sender);
         void __fastcall FormKeyDown(TObject *Sender, WORD &Key,
           TShiftState Shift);
@@ -75,6 +74,8 @@ __published:	// IDE-managed Components
         void __fastcall Button4Click(TObject *Sender);
         void __fastcall Button3Click(TObject *Sender);
         void __fastcall Button5Click(TObject *Sender);
+        void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+        void __fastcall FormCreate(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
         __fastcall TForm1(TComponent* Owner);
